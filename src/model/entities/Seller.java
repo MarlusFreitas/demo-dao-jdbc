@@ -1,7 +1,7 @@
-package entities;
+package model.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class Seller implements Serializable{
@@ -9,13 +9,16 @@ public class Seller implements Serializable{
     private Integer id;
     private String name;
     private String email;
-    private LocalDate birthDate;
+    private Date birthDate;
 
-    public Seller(Integer id, String name, String email, LocalDate birthDate) {
+    private Department department;
+
+    public Seller(Integer id, String name, String email, Date birthDate, Department department) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
+        this.department = department;
     }
 
     public Integer getId() {
@@ -42,21 +45,26 @@ public class Seller implements Serializable{
         this.email = email;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.birthDate);
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -72,16 +80,7 @@ public class Seller implements Serializable{
             return false;
         }
         final Seller other = (Seller) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.birthDate, other.birthDate);
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
@@ -92,9 +91,8 @@ public class Seller implements Serializable{
         sb.append(", name=").append(name);
         sb.append(", email=").append(email);
         sb.append(", birthDate=").append(birthDate);
+        sb.append(", department=").append(department);
         sb.append('}');
         return sb.toString();
-    }
-    
-    
+    }  
 }

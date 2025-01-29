@@ -1,5 +1,7 @@
 package db;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,6 +32,25 @@ public class DB {
                 conn.close();
             } catch (SQLException ex) {
                 throw new DbException("Erro ao conectar banco de dados: " + ex.getMessage());
+            }
+        }
+    }
+    public static void closeStatment(Statement statment){
+        if(statment != null){
+            try {
+                statment.close();
+            } catch (SQLException ex) {
+                throw new DbException("Erro ao statment: " + ex.getMessage());
+            }
+        }
+    }
+    
+    public static void closeResultSet(ResultSet resultSet){
+        if(resultSet != null){
+            try {
+                resultSet.close();
+            } catch (SQLException ex) {
+                throw new DbException("Erro ao ResultSet: " + ex.getMessage());
             }
         }
     }
