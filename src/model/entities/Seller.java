@@ -10,17 +10,27 @@ public class Seller implements Serializable{
     private String name;
     private String email;
     private Date birthDate;
+    private Double baseSalary;
 
     private Department department;
 
-    public Seller(Integer id, String name, String email, Date birthDate, Department department) {
+    public Seller(Integer id, String name, String email, Date birthDate, Double baseSalary, Department department) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
         this.department = department;
+        this.baseSalary = baseSalary;
     }
 
+    public Double getbaseSalary() {
+        return baseSalary;
+    }
+    
+    public void setbaseSalary(Double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -92,6 +102,7 @@ public class Seller implements Serializable{
         sb.append(", email=").append(email);
         sb.append(", birthDate=").append(birthDate);
         sb.append(", department=").append(department);
+        sb.append(", baseSalary=").append(baseSalary);
         sb.append('}');
         return sb.toString();
     }  
