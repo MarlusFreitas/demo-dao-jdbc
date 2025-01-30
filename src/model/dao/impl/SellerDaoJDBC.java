@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.HashMap;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import model.dao.SellerDao;
@@ -62,12 +62,47 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void update(Seller dep) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE seller "
+                    + "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+                    + "WHERE Id = ?");
+            st.setString(1, dep.getName());
+            st.setString(2, dep.getEmail());
+            st.setDate(3, new Date(dep.getBirthDate().getTime()));
+            st.setDouble(4, dep.getbaseSalary());
+            st.setInt(5, dep.getDepartment().getId());
+            st.setInt(6, dep.getId());
+            
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DbException("Error to insert: " + e.getMessage());
+        }
+        finally{
+            DB.closeStatment(st);
+        }
     }
 
     @Override
     public void deleteById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+            st.setInt(1, id);
+
+            int rows = st.executeUpdate();
+            if(rows == 0){
+                throw new DbException("ID NÃO EXISTE!");
+            }
+
+        } catch (SQLException e) {
+            throw new DbException("Error to deleteById: " + e.getMessage());
+        }
+        finally{
+            DB.closeStatment(st);
+        }
     }
 
     @Override
